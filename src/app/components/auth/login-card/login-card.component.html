@@ -1,0 +1,30 @@
+<p-card header="Sign In">
+	<div>
+			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+					<fieldset>
+							<div class="p-field block mb-3">
+									<label for="email">Email</label>
+									<input formControlName="email" id="email" type="username" aria-describedby="username2-help" class="p-invalid block" pInputText />
+									<small id="email-help" *ngIf="email?.errors?.['email'] && !email?.errors?.['required']" class="p-error block">Email not valid.</small>
+									<small id="email-help" *ngIf="credentialsError" class="p-error block">Incorrect Credentials.</small>
+							</div>
+							<div class="p-field block mb-3">
+									<label for="password">Password</label>
+									<input formControlName="password" id="password" type="password" aria-describedby="password-help" class="p-invalid block" pInputText />
+									<small id="password-help" *ngIf="credentialsError" class="p-error">Incorrect Credentials.</small>
+							</div>
+							<button type="submit" pButton label="Continue"></button>
+					</fieldset>
+					<a class="go-register" (click)="goToRegister()">Don't have an account?</a>
+			</form>
+			<div class="separator"><span>or</span></div>
+			<fieldset>
+					<div class="log-google-button">
+							<a id="google-oauth" (click)="onClick()">
+									<img src="https://www.vectorlogo.zone/logos/google/google-icon.svg" loading="eager" alt="Google logo" aria-hidden="false" class="sc-e28dfec6-0 gWvuic">
+									<span>Continue with Google</span>
+							</a>
+					</div>
+			</fieldset>
+	</div>
+</p-card>
