@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { InputDataComponent } from './views/main/input-data/input-data.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,11 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./views/auth/auth.module').then(m => m.AuthModule),
-  }
+	},
+	{
+		path: 'main',
+		component: InputDataComponent
+	}
 ];
 
 @NgModule({

@@ -1,0 +1,18 @@
+:host >>> .pfp{
+    width: 50x;
+    height: 50px;
+    border-radius: 50%;
+    margin: 0 10px;
+    cursor: pointer;
+}
+:host >>> .user-container{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: auto;
+}
+:host >>> .p-menubarsub{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}

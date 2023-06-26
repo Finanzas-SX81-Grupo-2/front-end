@@ -1,0 +1,9 @@
+<p-menubar [model]="items">
+    <ng-template pTemplate="end">
+        <div class="user-container"> <img class="pfp" referrerpolicy="no-referrer" [src]="obj.photoURL">
+            
+            <span class="user-name">{{obj.displayName}}</span>
+            <button pButton pRipple (click)="logout()" type="button" icon="pi pi-sign-out" class="p-button-rounded p-button-secondary p-button-text"></button>      
+          </div>    
+    </ng-template>
+</p-menubar>

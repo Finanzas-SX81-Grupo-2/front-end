@@ -34,6 +34,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { NavbarComponent } from "./navbar/navbar.component";
 
 const primengModules = [
     ButtonModule,
@@ -81,11 +82,13 @@ const angularModules = [
 		...primengModules,
 		LoginCardComponent,
 		RegisterCardComponent,
+		NavbarComponent
 	],
 	declarations: [
 		ComponentsComponent,
 		LoginCardComponent,
 		RegisterCardComponent,
+		NavbarComponent
   ]
 
 })

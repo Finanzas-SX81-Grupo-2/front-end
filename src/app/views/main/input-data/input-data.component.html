@@ -1,0 +1,192 @@
+<app-navbar></app-navbar>
+
+<div class="grid flex justify-content-center align-items-center mt-4">
+	<div class="lg:col-10 md:col-10 col-10 container">
+		<form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+			<fieldset>
+				<div class="grid">
+					<div class="col-3 p-field block mb-3">
+							<label for="email">Moneda</label><br />
+							<p-dropdown [options]="monedas" formControlName="moneda" optionLabel="value"></p-dropdown>
+						</div>
+					<div class="col-3 p-field block mb-2">
+						<label for="password">Valor de Vivienda</label>
+						<p-inputNumber formControlName="valorVivienda" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password">¿Ha recibido anteriormente apoyo habitacional?</label><br />
+						<p-inputSwitch formControlName="boolApoyo"></p-inputSwitch>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password">Cuota Inicial</label>
+						<p-inputNumber formControlName="cuotaInicial" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password"> % de cuota inicial </label>
+						<p-inputNumber [readonly]="true" [inputStyle]="{ 'background': 'LightGray'}" formControlName="porcentajeCuotaInicial" inputId="percent" suffix="%"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password"> Bono del Buen Pagador </label>
+						<p-inputNumber [inputStyle]="{ 'background': 'LightGray'}" [readonly]="true" formControlName="bonoBuenPagador" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password"> ¿La vivienda es sostenible? </label> <br />
+						<p-inputSwitch formControlName="boolSostenible"></p-inputSwitch>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password">Total BBP</label>
+						<p-inputNumber [inputStyle]="{ 'background': 'LightGray'}" [readonly]="true" formControlName="BBP" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password">MONTO FINANCIAR</label>
+						<p-inputNumber [inputStyle]="{ 'background': 'yellow', 'font-weight': 'bold' }" [readonly]="true" formControlName="montoFinanciar" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="email">BANCO</label><br />
+						<p-dropdown [options]="bancos" formControlName="banco" optionLabel="label"></p-dropdown>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password"></label> <br/>
+						<button pButton pRipple type="button" (click)="calcularMontoFinanciar()" label="Calcular" class="p-button-raised p-button-help"></button>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password"></label> <br/>
+						<button pButton pRipple type="button" (click)="export()" label="Exportar CSV" class="p-button-raised p-button-help"></button>
+					</div>
+				</div>
+				<div class="grid mt-3">
+					<div class="col-3 p-field block mb-3">
+						<label for="password">Tasa Efectiva Anual</label>
+						<p-inputNumber formControlName="TEA" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5" inputId="percent" suffix="%"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password">Seguro Desgravamen</label>
+						<p-inputNumber formControlName="seguroDesgravamen" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5" inputId="percent" suffix="%"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password">Seguro Inmueble Anual</label>
+						<p-inputNumber formControlName="seguroInmueble" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5" inputId="percent" suffix="%"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password">Plazo Meses</label>
+						<p-inputNumber formControlName="plazoMeses" inputId="min" mode="decimal" [min]="10" [max]="300"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password">Tasa Costo Efectiva Anual</label>
+						<p-inputNumber [readonly]="true" [inputStyle]="{ 'background': 'LightGray'}" formControlName="TCEA" inputId="percent" suffix="%"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password">COSTO MENSUAL</label>
+						<p-inputNumber [inputStyle]="{ 'background': 'yellow', 'font-weight': 'bold' }" [readonly]="true" formControlName="cuotaMensual" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
+					</div>
+					<div class="col-3 p-field block mb-3">
+						<label for="password"></label> <br/>
+						<button pButton pRipple type="button" (click)="calcularFinal()" label="Calcular" class="p-button-raised p-button-help"></button>
+					</div>
+				</div>
+				<button type="submit" pButton label="Continue"></button>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+
+<div *ngIf="bancoActual === 'BBF'">
+	<div class="grid flex justify-content-center align-items-center mt-4">
+		<div class="lg:col-8 md:col-6 col-10 container">
+			<p-table [value]="datosBanBif" [tableStyle]="{'min-width': '50rem'}">
+				<ng-template pTemplate="header">
+						<tr>
+								<th>Periodo</th>
+								<th>Saldo Principal</th>
+								<th>Amortizacion</th>
+								<th>Interes</th>
+								<th>Seguro de Desgravamen</th>
+								<th>Seguro de Inmueble</th>
+								<th>Comision</th>
+								<th>Cuota Mensual</th>
+						</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-product>
+						<tr>
+								<td>{{product.cuota}}</td>
+								<td>{{product.sp | number:'1.2-2'}}</td>
+								<td>{{product.amortizacion | number:'1.2-2'}}</td>
+								<td>{{product.interes | number:'1.2-2'}}</td>
+								<td>{{product.desgravamen | number:'1.2-2'}}</td>
+								<td>{{product.todoRiesgo | number:'1.2-2'}}</td>
+								<td>{{product.comision | number:'1.2-2'}}</td>
+								<td>{{product.totalCuota | number:'1.2-2'}}</td>
+						</tr>
+				</ng-template>
+			</p-table>
+		</div>
+	</div>
+</div>
+
+
+<div *ngIf="bancoActual === 'INTBK'">
+	<div class="grid flex justify-content-center align-items-center mt-4">
+		<div class="lg:col-8 md:col-6 col-10 container">
+			<p-table [value]="datosInterbank" [tableStyle]="{'min-width': '50rem'}">
+				<ng-template pTemplate="header">
+						<tr>
+								<th>Periodo</th>
+								<th>Amortizacion</th>
+								<th>Intereses Totales</th>
+								<th>Interes</th>
+								<th>Seguro Desgravamenth</th>
+								<th>Seguro Inmueble</th>
+								<th>Cuota Mensual</th>
+								<th>Saldo</th>
+						</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-product>
+						<tr>
+								<td>{{product.periodo}}</td>
+								<td>{{product.amortizacion}}</td>
+								<td>{{product.IT}}</td>
+								<td>{{product.interes}}</td>
+								<td>{{product.SD}}</td>
+								<td>{{product.SI}}</td>
+								<td>{{product.cuota}}</td>
+								<td>{{ product._saldo | number:'1.2-2' }}</td>
+						</tr>
+				</ng-template>
+			</p-table>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="bancoActual === 'BCP'">
+	<div class="grid flex justify-content-center align-items-center mt-4">
+		<div class="lg:col-8 md:col-6 col-10 container">
+			<p-table [value]="datosBCP" [tableStyle]="{'min-width': '50rem'}">
+				<ng-template pTemplate="header">
+						<tr>
+								<th>Periodo</th>
+								<th>Amortizacion</th>
+								<th>Intereses Totales</th>
+								<th>Interes</th>
+								<th>Seguro Desgravamenth</th>
+								<th>Seguro Inmueble</th>
+								<th>Cuota Mensual</th>
+								<th>Saldo</th>
+						</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-bcp>
+						<tr>
+								<td>{{bcp.periodo}}</td>
+								<td>{{bcp.amortizacion}}</td>
+								<td>{{bcp.IT}}</td>
+								<td>{{bcp.interes}}</td>
+								<td>{{bcp.SD}}</td>
+								<td>{{bcp.SI}}</td>
+								<td>{{bcp.cuota}}</td>
+								<td>{{ bcp._saldo | number:'1.2-2' }}</td>
+						</tr>
+				</ng-template>
+			</p-table>
+		</div>
+	</div>
+</div>

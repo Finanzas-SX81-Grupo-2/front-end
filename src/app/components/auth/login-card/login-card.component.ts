@@ -44,7 +44,7 @@ export class LoginCardComponent implements OnInit {
       .then(response => {
         localStorage.setItem('user', JSON.stringify(response.user));
         console.log(response);
-        this.router.navigate(['/main', 'generate']);
+        this.router.navigate(['/main']);
       })
       .catch(error => console.log(error))
   }

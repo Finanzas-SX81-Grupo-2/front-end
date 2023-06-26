@@ -11,21 +11,30 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireStorageModule, USE_EMULATOR as USE_STORAGE_EMULATOR } from '@angular/fire/compat/storage';
-
+import { InputNumberModule } from 'primeng/inputnumber';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { ConfirmationService } from 'primeng/api';
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { InputDataComponent } from './views/main/input-data/input-data.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
     AppComponent,
+    InputDataComponent,
   ],
   imports: [
-    BrowserModule,
+		BrowserModule,
+		InputNumberModule,
 		AppRoutingModule,
 		HttpClientModule,
-    ComponentsModule,
+		TableModule,
+		ComponentsModule,
+		DropdownModule,
+		InputSwitchModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
