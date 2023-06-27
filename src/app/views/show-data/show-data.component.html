@@ -7,43 +7,27 @@
 				<div class="grid">
 					<div class="col-3 p-field block mb-3">
 						<label for="email">Titulo</label><br />
-						<input formControlName="titulo" pInputText />
+						<input [readonly]="true" formControlName="titulo" pInputText />
 					</div>
 					<div class="col-3 p-field block mb-2">
 						<label for="password">Valor de Vivienda</label>
-						<p-inputNumber formControlName="valorVivienda" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
-					</div>
-					<div class="col-3 p-field block mb-3">
-						<label for="password">¿Ha recibido anteriormente apoyo habitacional?</label><br />
-						<p-inputSwitch formControlName="boolApoyo"></p-inputSwitch>
+						<p-inputNumber  [readonly]="true"formControlName="valorVivienda" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
 					</div>
 					<div class="col-3 p-field block mb-3">
 						<label for="password">Cuota Inicial</label>
-						<p-inputNumber formControlName="cuotaInicial" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
-					</div>
-					<div class="col-3 p-field block mb-3">
-						<label for="password"> % de cuota inicial </label>
-						<p-inputNumber [readonly]="true" [inputStyle]="{ 'background': 'LightGray'}" formControlName="porcentajeCuotaInicial" inputId="percent" suffix="%"></p-inputNumber>
-					</div>
-					<div class="col-3 p-field block mb-3">
-						<label for="password"> Bono del Buen Pagador </label>
-						<p-inputNumber [inputStyle]="{ 'background': 'LightGray'}" [readonly]="true" formControlName="bonoBuenPagador" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
-					</div>
-					<div class="col-3 p-field block mb-3">
-						<label for="password"> ¿La vivienda es sostenible? </label> <br />
-						<p-inputSwitch formControlName="boolSostenible"></p-inputSwitch>
+						<p-inputNumber [readonly]="true" formControlName="cuotaInicial" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
 					</div>
 					<div class="col-3 p-field block mb-3">
 						<label for="password">Total BBP</label>
-						<p-inputNumber [inputStyle]="{ 'background': 'LightGray'}" [readonly]="true" formControlName="BBP" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
+						<p-inputNumber [readonly]="true" [inputStyle]="{ 'background': 'LightGray'}" [readonly]="true" formControlName="BBP" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
 					</div>
 					<div class="col-3 p-field block mb-3">
 						<label for="password">Plazo Meses</label>
-						<p-inputNumber formControlName="plazoMeses" inputId="min" mode="decimal" [min]="10" [max]="300"></p-inputNumber>
+						<p-inputNumber [readonly]="true" formControlName="plazoMeses" inputId="min" mode="decimal" [min]="10" [max]="300"></p-inputNumber>
 					</div>
 					<div class="col-3 p-field block mb-3">
 						<label for="password">MONTO FINANCIAR</label>
-						<p-inputNumber [inputStyle]="{ 'background': 'yellow', 'font-weight': 'bold' }" [readonly]="true" formControlName="montoFinanciar" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
+						<p-inputNumber [readonly]="true" [inputStyle]="{ 'background': 'yellow', 'font-weight': 'bold' }" [readonly]="true" formControlName="montoFinanciar" inputId="currency-peru" mode="currency" currency="PEN" locale="es-PE"></p-inputNumber>
 					</div>
 					<div class="col-3 p-field block mb-3">
 						<label for="email">BANCO</label><br />
@@ -72,7 +56,6 @@
 						<p-inputNumber [readonly]="true" [inputStyle]="{ 'background': 'LightGray'}" formControlName="seguroInmueble" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5" inputId="percent" suffix="%"></p-inputNumber>
 					</div>
 				</div>
-				<button type="submit" (click)="guardar()" pButton label="Guardar"></button>
 			</fieldset>
 		</form>
 	</div>

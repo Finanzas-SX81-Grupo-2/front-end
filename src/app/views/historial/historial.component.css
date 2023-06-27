@@ -1,0 +1,13 @@
+img {
+  max-width: 100%;
+  height: auto;
+}
+.narrow-input {
+  width: 80%; /* Adjust the width as per your preference */
+	text-align: left;
+	font-weight: bold;
+	color: black;
+}
+h2{
+	margin: 0;
+}

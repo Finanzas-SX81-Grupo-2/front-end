@@ -1,0 +1,76 @@
+<app-navbar></app-navbar>
+
+
+<div class="grid flex justify-content-center align-items-center mt-8">
+
+	<div class="col-3">
+		<img src="https://www.mivivienda.com.pe/PortalCMS/archivos/documentos/LOGO%20FMV-2189.PNG" alt="logo">
+	</div>
+
+	<div class="lg:col-6 md:col-10 col-10 container">
+	
+		<p-accordion>
+			<p-accordionTab *ngFor="let flujo of flujos" [selected]="true">
+
+				<ng-template pTemplate="header">
+					<div class="grid col-12">
+							<div class="col-12">
+									<h2>{{flujo.titulo}}</h2>
+									<small class="date">{{flujo.date_time}}</small>    
+							</div>
+					</div>
+				</ng-template>
+
+
+				<div class="grid flex mt-4">
+
+					<div class="col-2">
+						<span class="p-float-label">
+							<input id="float-input" disabled="true" type="text" class="narrow-input" pInputText [(ngModel)]="flujo.banco"> 
+							<label for="float-input">Banco</label>
+						</span>
+					</div>
+
+					<div class="col-2">
+						<span class="p-float-label">
+							<input id="float-input" disabled="true" type="text" class="narrow-input" pInputText [(ngModel)]="flujo.valorTotal"> 
+							<label for="float-input">Monto Vivienda</label>
+						</span>
+					</div>
+
+					<div class="col-2">
+						<span class="p-float-label">
+							<input id="float-input" disabled="true" type="text" class="narrow-input" pInputText [(ngModel)]="flujo.montoFinanciar"> 
+							<label for="float-input">Monto Financiar</label>
+						</span>
+					</div>
+
+					<div class="col-2">
+						<span class="p-float-label">
+							<input id="float-input" disabled="true" type="text" class="narrow-input" pInputText [(ngModel)]="flujo.totalBBP"> 
+							<label for="float-input">Bono Buen Pagador</label>
+						</span>
+					</div>
+
+					<div class="col-2">
+						<span class="p-float-label">
+							<input id="float-input" disabled="true" type="text" class="narrow-input" pInputText [(ngModel)]="flujo.meses"> 
+							<label for="float-input">Meses</label>
+						</span>
+					</div>
+
+					<div class="col-2">
+						<span class="p-float-label">
+							<input id="float-input" disabled="true" type="text" class="narrow-input" pInputText [(ngModel)]="flujo.cuotaInicial"> 
+							<label for="float-input">Cuota Inicial</label>
+						</span>
+					</div>
+
+				</div>
+				<button pButton pRipple type="button" label="Mostrar Mas ..." (click)="mostrarMas(flujo)" class="p-button-raised p-button-success mt-5"></button>
+				<button pButton pRipple type="button" label="Eliminar" (click)="eliminar(flujo)" class="ml-4 p-button-raised p-button-danger mt-5"></button>
+			</p-accordionTab>
+		</p-accordion>
+	</div>
+
+</div>

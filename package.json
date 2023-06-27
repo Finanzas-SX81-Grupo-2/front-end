@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "@formulajs/formulajs": "^4.2.1",
+    "axios": "^1.4.0",
     "file-saver": "^2.0.5",
     "firebase": "^9.22.0",
     "primeflex": "^3.3.0",

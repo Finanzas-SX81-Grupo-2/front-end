@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FirebaseAuthCustomService } from 'src/app/services/firebase-auth.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
-import { Router } from '@angular/router';
-import * as formulajs from '@formulajs/formulajs' // import entire package
 import { calcularFlujoIntebank, calcularFlujoBCP, bancoDaniel, banBifFlujo, calcularFlujoBanBif, exportToCSV } from 'src/app/services/bancos';
 import * as FileSaver from "file-saver";
-import { FirebaseAuthCustomService } from 'src/app/services/firebase-auth.service';
+import * as formulajs from '@formulajs/formulajs' // import entire package
 
 @Component({
-  selector: 'app-input-data',
-  templateUrl: './input-data.component.html',
-  styleUrls: ['./input-data.component.css']
+  selector: 'app-show-data',
+  templateUrl: './show-data.component.html',
+  styleUrls: ['./show-data.component.css']
 })
-export class InputDataComponent implements OnInit {
-
-  dataForm!: UntypedFormGroup;
+	
+export class ShowDataComponent implements OnInit {
+	id: string = ""; 
+	
+	dataForm!: UntypedFormGroup;
 	obj: any;
 	min = 60;
 	max = 300;
@@ -22,7 +24,7 @@ export class InputDataComponent implements OnInit {
 	datosBanBif: banBifFlujo[] = [];
 	clicked = false;
 	dataExport: any = [];
-	bancoActual = "Interbank";
+	bancoActual = "INTBK";
 
 	_disabled = true;
 	number: number = 0;
@@ -36,50 +38,61 @@ export class InputDataComponent implements OnInit {
 		{ label: 'BanBif', value: 'BanBif', TEA: 0.13, SD: 0.00056, STR: 0.00031 },
 	]
 
+	flujo: any;
+	constructor(private route: ActivatedRoute, private service: FirebaseAuthCustomService, private formBuilder: UntypedFormBuilder) { }
+	
 
-	constructor(
-		private formBuilder: UntypedFormBuilder,
-		private router: Router,
-		private service: FirebaseAuthCustomService
-		) { }
-
-	ngOnInit(): void {
-		this.obj = JSON.parse(localStorage.getItem('user') || '{}');
+	ngOnInit() {
 		this.dataForm = this.formBuilder.group({
-      titulo: ['', { validators: [Validators.required],updateOn: 'change'}],
-      valorVivienda: ['200000', { validators: [Validators.required],updateOn: 'change'}],
-      boolApoyo: ['', { validators: [Validators.required],updateOn: 'change'}],
-			cuotaInicial: ['30000', { validators: [Validators.required], updateOn: 'change' }],
+			titulo: ["", { validators: [Validators.required],updateOn: 'change'}],
+			valorVivienda: ['', { validators: [Validators.required],updateOn: 'change'}],
+			cuotaInicial: ['', { validators: [Validators.required], updateOn: 'change' }],
 			porcentajeCuotaInicial: ['', { validators: [Validators.required], updateOn: 'change' }],
-      bonoBuenPagador: ['', { validators: [Validators.required],updateOn: 'change'}],
-      boolSostenible: ['true', { validators: [Validators.required],updateOn: 'change'}],
-      BBP: ['', { validators: [Validators.required],updateOn: 'change'}],
-      montoFinanciar: ['', { validators: [Validators.required],updateOn: 'change'}],
-      TEA: ['', { validators: [Validators.required],updateOn: 'change'}],
-      seguroDesgravamen: ['', { validators: [Validators.required],updateOn: 'change'}],
-      seguroInmueble: ['', { validators: [Validators.required],updateOn: 'change'}],
-      plazoMeses: ['12', { validators: [Validators.required],updateOn: 'change'}],
-      TCEA: ['', { validators: [Validators.required],updateOn: 'change'}],
-      cuotaMensual: ['', { validators: [Validators.required],updateOn: 'change'}],
-      costoSeguroInmueble: ['', { validators: [Validators.required],updateOn: 'change'}],
-      banco: ['', { validators: [Validators.required],updateOn: 'change'}],
+			BBP: ['', { validators: [Validators.required],updateOn: 'change'}],
+			montoFinanciar: ['', { validators: [Validators.required],updateOn: 'change'}],
+			TEA: ['', { validators: [Validators.required],updateOn: 'change'}],
+			seguroDesgravamen: ['', { validators: [Validators.required],updateOn: 'change'}],
+			seguroInmueble: ['', { validators: [Validators.required],updateOn: 'change'}],
+			plazoMeses: ['', { validators: [Validators.required],updateOn: 'change'}],
+			costoSeguroInmueble: ['', { validators: [Validators.required],updateOn: 'change'}],
+			banco: ['Interbank', { validators: [Validators.required],updateOn: 'change'}],
 		});
-		
+		this.route.params.subscribe(params => {
+			const idParam: string | null = params['id'];
+			if (idParam !== null) {
+				this.id = idParam;
+				// Call your backend API with the ID
+				this.service.getFlujo(this.id).then((res: any) => {
+					this.flujo = res.data;
+					console.log(this.flujo);
+					this.obj = JSON.parse(localStorage.getItem('user') || '{}');
+
+					this.dataForm.get('titulo')?.setValue(this.flujo.titulo);
+					this.dataForm.get('valorVivienda')?.setValue(this.flujo.valorTotal);
+					this.dataForm.get('cuotaInicial')?.setValue(this.flujo.cuotaInicial);
+					this.dataForm.get('BBP')?.setValue(this.flujo.totalBBP);
+					this.dataForm.get('montoFinanciar')?.setValue(this.flujo.montoFinanciar);
+					this.dataForm.get('plazoMeses')?.setValue(this.flujo.meses);
+					
+				})
+			}
+		});
+
 		this.dataForm.get('valorVivienda')?.valueChanges.subscribe(() => {
 			this.updatePorcentajeCuotaInicial();
 			this.updateBBP();
-    });
+		});
 
-    this.dataForm.get('cuotaInicial')?.valueChanges.subscribe(() => {
-      this.updatePorcentajeCuotaInicial();
+		this.dataForm.get('cuotaInicial')?.valueChanges.subscribe(() => {
+			this.updatePorcentajeCuotaInicial();
 		});
 		
 		this.dataForm.get('boolApoyo')?.valueChanges.subscribe(() => {
-      this.updateApoyo();
+			this.updateApoyo();
 		});
 
 		this.dataForm.get('boolSostenible')?.valueChanges.subscribe(() => {
-      this.updateTotalBBP();
+			this.updateTotalBBP();
 		});
 		this.dataForm.get('banco')?.valueChanges.subscribe(() => {
 			const _banco = this.dataForm.get('banco')?.value;
@@ -90,8 +103,10 @@ export class InputDataComponent implements OnInit {
 			this.dataForm.get('seguroInmueble')?.setValue(_banco.STR * 100);
 
 		});
+		
 	}
-	
+
+
 	updatePorcentajeCuotaInicial() {
     const valorVivienda = this.dataForm.get('valorVivienda')?.value;
     const cuotaInicial = this.dataForm.get('cuotaInicial')?.value;
@@ -211,13 +226,13 @@ export class InputDataComponent implements OnInit {
 	export() {
 
 		switch (this.bancoActual) {
-			case "Interbank":
+			case "INTBK":
 				this.dataExport = this.datosInterbank;
 				break;
 			case "BCP":
 				this.dataExport = this.datosBCP;
 				break;
-			case "BanBif":
+			case "BBF":
 				this.dataExport = this.datosBanBif;
 				break;
 			default:
@@ -242,20 +257,5 @@ export class InputDataComponent implements OnInit {
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
   }
 
-
-	guardar() {
-		const _data = {
-			titulo: this.dataForm.get('titulo')?.value,
-			valorTotal: this.dataForm.get('valorVivienda')?.value,
-			banco: this.bancoActual,
-			cuotaInicial: this.dataForm.get('cuotaInicial')?.value,
-			meses: this.dataForm.get('plazoMeses')?.value,
-			totalBBP: this.dataForm.get('BBP')?.value,
-			montoFinanciar: this.dataForm.get('montoFinanciar')?.value,
-		}
-		this.service.guardarFlujo(_data)
-
-		
-	}
 
 }

@@ -26,14 +26,14 @@ export class NavbarComponent {
     img.referrerPolicy = "no-referrer";
     this.items = [
       {
-        label: 'Generate Video',
+        label: 'Crear Flujo',
         icon: 'pi pi-code',
-        routerLink: ['/main','generate']
+        routerLink: ['/main']
       },
       {
-        label: 'Dashboard',
+        label: 'Historial',
         icon: 'pi pi-database',
-        routerLink: ['/main','dashboard']
+        routerLink: ['/historial']
       }
     ];
   }

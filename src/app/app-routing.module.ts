@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InputDataComponent } from './views/main/input-data/input-data.component';
+import { HistorialComponent } from './views/historial/historial.component';
+import { ShowDataComponent } from './views/show-data/show-data.component';
 
 const routes: Routes = [
   {
@@ -15,6 +17,14 @@ const routes: Routes = [
 	{
 		path: 'main',
 		component: InputDataComponent
+	},
+	{
+		path: 'historial',
+		component: HistorialComponent
+	},
+	{
+		path: 'show/:id',
+		component: ShowDataComponent
 	}
 ];
 

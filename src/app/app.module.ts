@@ -20,11 +20,18 @@ import { InputDataComponent } from './views/main/input-data/input-data.component
 import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { TableModule } from 'primeng/table';
+import { HistorialComponent } from './views/historial/historial.component';
+import { FieldsetModule } from 'primeng/fieldset';
+import { ShowDataComponent } from './views/show-data/show-data.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     InputDataComponent,
+    HistorialComponent,
+    ShowDataComponent,
   ],
   imports: [
 		BrowserModule,
@@ -32,6 +39,7 @@ import { TableModule } from 'primeng/table';
 		AppRoutingModule,
 		HttpClientModule,
 		TableModule,
+		FieldsetModule,
 		ComponentsModule,
 		DropdownModule,
 		InputSwitchModule,
